@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    width: 260px;
+    margin: 0;
+    padding: 16px;
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    background: #fff;
+    color: #18191c;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .header .logo { font-size: 18px; }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #status { font-size: 14px; }
+  .tip {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f2f3;
+    font-size: 12px;
+    color: #9499a0;
+    line-height: 1.6;
+  }
+  .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    inset: 0;
+    background: #c9ccd0;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .switch input:checked + .slider { background: #fb7299; }
+  .switch input:checked + .slider::before { transform: translateX(20px); }
+</style>
+</head>
+<body>
+  <div class="header"><span class="logo">🧘</span><span>BiliZen · 禅模式看B站</span></div>
+  <div class="row">
+    <span id="status">评论区显示中</span>
+    <label class="switch">
+      <input type="checkbox" id="toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="tip">支持视频、番剧、动态、空间页面，切换后立即生效。</div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/* 开关通过在 <html> 上加/移除 .bilizen-hide-comments 类来控制，纯 CSS 方案对 SPA 动态加载天然免疫。 */
+
+/* 新版评论区：bili-comments 自定义元素 + #commentapp 容器 */
+.bilizen-hide-comments bili-comments,
+.bilizen-hide-comments #commentapp,
+/* 新版评论区内部容器兜底 */
+.bilizen-hide-comments .comment-container,
+/* 旧版评论区 */
+.bilizen-hide-comments #comment,
+.bilizen-hide-comments .bb-comment,
+.bilizen-hide-comments .bbComment,
+.bilizen-hide-comments .comment-box {
+  display: none !important;
+}

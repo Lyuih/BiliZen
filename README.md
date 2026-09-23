@@ -1,0 +1,40 @@
+# BiliZen - 禅模式看B站
+
+一个极简的浏览器扩展（Chrome / Edge，Manifest V3）：一键隐藏或显示哔哩哔哩的评论区，少吵架，多看片。支持视频页、番剧页、动态页、空间页。
+
+## 安装（开发者模式加载）
+
+1. 打开 Chrome 或 Edge，地址栏输入 `chrome://extensions`（Edge 为 `edge://extensions`）
+2. 打开右上角的「开发者模式」
+3. 点击「加载已解压的扩展程序」，选择本目录（`bilizen` 文件夹）
+4. 工具栏出现 🧘 图标即安装成功，点开即可看到开关
+
+## 使用
+
+- 默认安装后即隐藏评论区
+- 点击工具栏图标，用开关切换「隐藏 / 显示」，页面上立即生效，无需刷新
+- 开关状态会被记住，对所有 B 站标签页同步生效
+
+## 工作原理
+
+- `content.css` 定义了隐藏规则，通过在页面 `<html>` 元素上切换 `bilizen-hide-comments` 类来开关
+- `content.js` 在 `document_start` 阶段读取存储并加上类，同时监听 `chrome.storage.onChanged` 实现实时切换
+- 纯 CSS 方案对 B 站单页应用（SPA）的动态加载天然免疫，站内跳转不失效
+
+## 更新选择器（B 站改版后失效时）
+
+编辑 `content.css` 中的选择器列表即可。当前命中的是：
+
+| 选择器 | 覆盖版本 |
+| --- | --- |
+| `bili-comments` | 新版评论区自定义元素（视频/番剧/动态/空间通用） |
+| `#commentapp` | 新版评论区容器 |
+| `.comment-container` | 新版内部容器（兜底） |
+| `#comment` / `.bb-comment` / `.bbComment` / `.comment-box` | 旧版评论区（兜底） |
+
+想覆盖更多页面（如课程页 `cheese.bilibili.com`），在 `manifest.json` 的 `content_scripts.matches` 里追加 URL 模式即可。
+
+## 开源协议
+
+[MIT](LICENSE)
+

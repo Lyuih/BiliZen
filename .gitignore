@@ -1,0 +1,16 @@
+# 依赖（未来若引入构建工具）
+node_modules/
+
+# 打包产物与签名密钥（.pem 是 Chrome Web Store 签名私钥，切勿提交）
+*.zip
+*.crx
+*.pem
+
+# 系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 编辑器配置
+.vscode/
+.idea/
