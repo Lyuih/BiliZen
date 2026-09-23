@@ -12,3 +12,40 @@
 .bilizen-hide-comments .comment-box {
   display: none !important;
 }
+
+/* ---------- 视频页右栏推荐卡片的「不再推荐」按钮：悬停卡片时浮现 ---------- */
+
+.video-page-card-small,
+.video-page-card {
+  position: relative;
+}
+
+.bilizen-del-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.video-page-card-small:hover .bilizen-del-btn,
+.video-page-card:hover .bilizen-del-btn {
+  opacity: 0.85;
+}
+
+.bilizen-del-btn:hover {
+  opacity: 1 !important;
+  background: #fb7299;
+}

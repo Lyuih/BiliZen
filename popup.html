@@ -56,6 +56,16 @@
     border-radius: 4px;
   }
   .up-del:hover { background: #fbe8ee; color: #fb7299; }
+  .up-restore {
+    border: none;
+    background: none;
+    color: #9499a0;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .up-restore:hover { background: #e8f4e8; color: #2ac864; }
   .up-empty { font-size: 12px; color: #9499a0; padding: 4px 0 0; }
   .add-row { display: flex; gap: 6px; margin-top: 8px; }
   .add-row input {
@@ -127,7 +137,9 @@
     <input id="upInput" type="text" placeholder="UID 或 UP主主页链接">
     <button id="upAdd">拉黑</button>
   </div>
-  <div class="tip">在UP主名字上右键选「BiliZen：拉黑该UP主」更快捷。被拉黑UP主的视频不再出现在推荐、相关和搜索列表。</div>
+  <div class="section-title">已删除推荐视频 <span id="rmCount"></span></div>
+  <div id="rmList" class="up-list"></div>
+  <div class="tip">在UP主名字上右键选「BiliZen：拉黑该UP主」；鼠标悬停右栏推荐卡片点 ✕ 可删除单条推荐。二者均立即生效。</div>
   <script src="popup.js"></script>
 </body>
 </html>

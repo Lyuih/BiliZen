@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BiliZen - 禅模式看B站",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "一键隐藏哔哩哔哩评论区、拉黑UP主，少吵架，多看片。支持视频页、番剧页、动态页、空间页。",
   "icons": {
     "16": "icons/icon16.png",
