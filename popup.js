@@ -1,19 +1,20 @@
 const COMMENT_KEY = 'hideComments';
+const RCMD_KEY = 'hideRcmd';
 const UPS_KEY = 'blockedUps';
-const REMOVED_KEY = 'removedVideos';
 
-const toggle = document.getElementById('toggle');
-const status = document.getElementById('status');
+const toggleComment = document.getElementById('toggleComment');
+const toggleRcmd = document.getElementById('toggleRcmd');
 const listEl = document.getElementById('upList');
 const countEl = document.getElementById('upCount');
 const input = document.getElementById('upInput');
 const addBtn = document.getElementById('upAdd');
-const rmListEl = document.getElementById('rmList');
-const rmCountEl = document.getElementById('rmCount');
 
-function renderComments(hide) {
-  toggle.checked = !!hide;
-  status.textContent = hide ? '评论区已隐藏' : '评论区显示中';
+function renderCommentToggle(hide) {
+  toggleComment.checked = !!hide;
+}
+
+function renderRcmdToggle(hide) {
+  toggleRcmd.checked = !!hide;
 }
 
 function renderUps(blockedUps) {
@@ -45,54 +46,28 @@ function renderUps(blockedUps) {
   }
 }
 
-function renderRemoved(removedVideos) {
-  const bvs = Object.keys(removedVideos).sort((a, b) => removedVideos[b].ts - removedVideos[a].ts);
-  rmCountEl.textContent = bvs.length ? `(${bvs.length})` : '';
-  if (!bvs.length) {
-    rmListEl.innerHTML = '<div class="up-empty">还没有删除过推荐视频</div>';
-    return;
-  }
-  rmListEl.innerHTML = '';
-  for (const bv of bvs) {
-    const row = document.createElement('div');
-    row.className = 'up-item';
-    const title = document.createElement('span');
-    title.className = 'up-name';
-    title.textContent = removedVideos[bv].title || bv;
-    title.title = `${removedVideos[bv].title || ''} (${bv})`;
-    const restore = document.createElement('button');
-    restore.className = 'up-restore';
-    restore.textContent = '↺';
-    restore.title = '恢复推荐';
-    restore.addEventListener('click', async () => {
-      const { removedVideos: cur = {} } = await chrome.storage.local.get(REMOVED_KEY);
-      delete cur[bv];
-      await chrome.storage.local.set({ removedVideos: cur });
-    });
-    row.append(title, restore);
-    rmListEl.appendChild(row);
-  }
-}
-
 chrome.storage.local.get(
-  { [COMMENT_KEY]: true, [UPS_KEY]: {}, [REMOVED_KEY]: {} },
+  { [COMMENT_KEY]: true, [RCMD_KEY]: false, [UPS_KEY]: {} },
   (res) => {
-    renderComments(res[COMMENT_KEY]);
+    renderCommentToggle(res[COMMENT_KEY]);
+    renderRcmdToggle(res[RCMD_KEY]);
     renderUps(res[UPS_KEY]);
-    renderRemoved(res[REMOVED_KEY]);
   }
 );
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local') return;
-  if (changes[COMMENT_KEY]) renderComments(changes[COMMENT_KEY].newValue);
+  if (changes[COMMENT_KEY]) renderCommentToggle(changes[COMMENT_KEY].newValue);
+  if (changes[RCMD_KEY]) renderRcmdToggle(changes[RCMD_KEY].newValue);
   if (changes[UPS_KEY]) renderUps(changes[UPS_KEY].newValue);
-  if (changes[REMOVED_KEY]) renderRemoved(changes[REMOVED_KEY].newValue);
 });
 
-toggle.addEventListener('change', () => {
-  chrome.storage.local.set({ [COMMENT_KEY]: toggle.checked });
-  renderComments(toggle.checked);
+toggleComment.addEventListener('change', () => {
+  chrome.storage.local.set({ [COMMENT_KEY]: toggleComment.checked });
+});
+
+toggleRcmd.addEventListener('change', () => {
+  chrome.storage.local.set({ [RCMD_KEY]: toggleRcmd.checked });
 });
 
 async function addUp() {
