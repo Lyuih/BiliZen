@@ -1,9 +1,11 @@
 const COMMENT_KEY = 'hideComments';
 const RCMD_KEY = 'hideRcmd';
+const ADS_KEY = 'hideAds';
 const UPS_KEY = 'blockedUps';
 
 const toggleComment = document.getElementById('toggleComment');
 const toggleRcmd = document.getElementById('toggleRcmd');
+const toggleAds = document.getElementById('toggleAds');
 const listEl = document.getElementById('upList');
 const countEl = document.getElementById('upCount');
 const input = document.getElementById('upInput');
@@ -15,6 +17,10 @@ function renderCommentToggle(hide) {
 
 function renderRcmdToggle(hide) {
   toggleRcmd.checked = !!hide;
+}
+
+function renderAdsToggle(hide) {
+  toggleAds.checked = !!hide;
 }
 
 function renderUps(blockedUps) {
@@ -47,10 +53,11 @@ function renderUps(blockedUps) {
 }
 
 chrome.storage.local.get(
-  { [COMMENT_KEY]: true, [RCMD_KEY]: false, [UPS_KEY]: {} },
+  { [COMMENT_KEY]: true, [RCMD_KEY]: false, [ADS_KEY]: true, [UPS_KEY]: {} },
   (res) => {
     renderCommentToggle(res[COMMENT_KEY]);
     renderRcmdToggle(res[RCMD_KEY]);
+    renderAdsToggle(res[ADS_KEY]);
     renderUps(res[UPS_KEY]);
   }
 );
@@ -59,6 +66,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local') return;
   if (changes[COMMENT_KEY]) renderCommentToggle(changes[COMMENT_KEY].newValue);
   if (changes[RCMD_KEY]) renderRcmdToggle(changes[RCMD_KEY].newValue);
+  if (changes[ADS_KEY]) renderAdsToggle(changes[ADS_KEY].newValue);
   if (changes[UPS_KEY]) renderUps(changes[UPS_KEY].newValue);
 });
 
@@ -68,6 +76,10 @@ toggleComment.addEventListener('change', () => {
 
 toggleRcmd.addEventListener('change', () => {
   chrome.storage.local.set({ [RCMD_KEY]: toggleRcmd.checked });
+});
+
+toggleAds.addEventListener('change', () => {
+  chrome.storage.local.set({ [ADS_KEY]: toggleAds.checked });
 });
 
 async function addUp() {

@@ -18,3 +18,10 @@
 .bilizen-hide-rcmd .recommend-list-v1 {
   display: none !important;
 }
+
+/* 隐藏视频页广告位：右栏广告卡、底部横幅广告、简介下方的活动推广横幅 */
+.bilizen-hide-ads .ad-report,
+.bilizen-hide-ads .video-card-ad-small,
+.bilizen-hide-ads .video-resource-list {
+  display: none !important;
+}

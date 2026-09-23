@@ -2,6 +2,8 @@ const COMMENT_TOGGLE_CLASS = 'bilizen-hide-comments';
 const COMMENT_KEY = 'hideComments';
 const RCMD_TOGGLE_CLASS = 'bilizen-hide-rcmd';
 const RCMD_KEY = 'hideRcmd';
+const ADS_TOGGLE_CLASS = 'bilizen-hide-ads';
+const ADS_KEY = 'hideAds';
 const UPS_STYLE_ID = 'bilizen-ups-style';
 const UPS_KEY = 'blockedUps';
 
@@ -19,6 +21,10 @@ function applyCommentHide(hide) {
 
 function applyRcmdHide(hide) {
   document.documentElement.classList.toggle(RCMD_TOGGLE_CLASS, !!hide);
+}
+
+function applyAdsHide(hide) {
+  document.documentElement.classList.toggle(ADS_TOGGLE_CLASS, !!hide);
 }
 
 function applyBlockedUps(blockedUps) {
@@ -41,10 +47,11 @@ function applyBlockedUps(blockedUps) {
 
 // document_start 阶段 documentElement 已存在，尽早套上 class / 样式避免闪现。
 chrome.storage.local.get(
-  { [COMMENT_KEY]: true, [RCMD_KEY]: false, [UPS_KEY]: {} },
+  { [COMMENT_KEY]: true, [RCMD_KEY]: false, [ADS_KEY]: true, [UPS_KEY]: {} },
   (res) => {
     applyCommentHide(res[COMMENT_KEY]);
     applyRcmdHide(res[RCMD_KEY]);
+    applyAdsHide(res[ADS_KEY]);
     applyBlockedUps(res[UPS_KEY]);
   }
 );
@@ -54,5 +61,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local') return;
   if (changes[COMMENT_KEY]) applyCommentHide(changes[COMMENT_KEY].newValue);
   if (changes[RCMD_KEY]) applyRcmdHide(changes[RCMD_KEY].newValue);
+  if (changes[ADS_KEY]) applyAdsHide(changes[ADS_KEY].newValue);
   if (changes[UPS_KEY]) applyBlockedUps(changes[UPS_KEY].newValue);
 });
