@@ -6,7 +6,8 @@ const UPS_KEY = 'blockedUps';
 // 视频卡片容器：黑名单只在卡片内找 UP 主链接，避免误伤视频简介里的制作人员名单
 const CARD_SELECTORS = [
   '.bili-video-card', // 首页推荐流、搜索结果
-  '.video-page-card', // 视频页右侧相关推荐
+  '.video-page-card', // 视频页右侧相关推荐（宽卡）
+  '.video-page-card-small', // 视频页右侧「接下来播放」列表
   '.video-card' // 旧版相关推荐、热门页
 ];
 
