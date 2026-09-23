@@ -5,7 +5,7 @@
 <style>
   * { box-sizing: border-box; }
   body {
-    width: 260px;
+    width: 280px;
     margin: 0;
     padding: 16px;
     font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
@@ -28,6 +28,57 @@
     gap: 12px;
   }
   #status { font-size: 14px; }
+  .section-title {
+    margin: 14px 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #61666d;
+  }
+  .up-list { max-height: 160px; overflow-y: auto; }
+  .up-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .up-item:hover { background: #f6f7f8; }
+  .up-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .up-del {
+    border: none;
+    background: none;
+    color: #9499a0;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .up-del:hover { background: #fbe8ee; color: #fb7299; }
+  .up-empty { font-size: 12px; color: #9499a0; padding: 4px 0 0; }
+  .add-row { display: flex; gap: 6px; margin-top: 8px; }
+  .add-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 5px 8px;
+    font-size: 12px;
+    border: 1px solid #e3e5e7;
+    border-radius: 6px;
+    outline: none;
+  }
+  .add-row input:focus { border-color: #fb7299; }
+  .add-row input.err { border-color: #f25d8e; background: #fff5f8; }
+  .add-row button {
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #fff;
+    background: #fb7299;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .add-row button:disabled { opacity: 0.6; cursor: default; }
   .tip {
     margin-top: 14px;
     padding-top: 10px;
@@ -70,7 +121,13 @@
       <span class="slider"></span>
     </label>
   </div>
-  <div class="tip">支持视频、番剧、动态、空间页面，切换后立即生效。</div>
+  <div class="section-title">拉黑UP主 <span id="upCount"></span></div>
+  <div id="upList" class="up-list"></div>
+  <div class="add-row">
+    <input id="upInput" type="text" placeholder="UID 或 UP主主页链接">
+    <button id="upAdd">拉黑</button>
+  </div>
+  <div class="tip">在UP主名字上右键选「BiliZen：拉黑该UP主」更快捷。被拉黑UP主的视频不再出现在推荐、相关和搜索列表。</div>
   <script src="popup.js"></script>
 </body>
 </html>
